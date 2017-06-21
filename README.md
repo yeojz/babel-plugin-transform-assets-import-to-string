@@ -1,4 +1,6 @@
 # babel-plugin-transform-assets-import-to-string
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/yeojz/babel-plugin-transform-assets-import-to-string.svg)](https://greenkeeper.io/)
 > Babel plugin that transforms image assets import and requires to urls / cdn
 
 [![npm][npm-badge]][npm-link]
