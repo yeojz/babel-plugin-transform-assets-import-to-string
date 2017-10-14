@@ -46,40 +46,46 @@ $> npm install babel-plugin-transform-assets-import-to-string --save
 
 ## Usage
 
-### via .babelrc
+### .babelrc
+
 ```json
 {
   "plugins": [["transform-assets-import-to-string", {
-    "baseDir": "/assets",
-    "baseUri": "http://your.cdn.address"
+    "extensions": [".gif", ".jpeg", ".jpg", ".png", ".svg"],
+    "alias": [
+      { from: "/assets/images", to: "http://cdn.1.address"},
+      { from: "/assets/jpegonly", to: "http://cdn.2.address"},
+      { from: "/assets", to: "http://cdn.3.address"}
+    ]
   }]]
 }
 ```
 
-### via Node API
+### JavaScript API
 
 ```js
 require("babel-core").transform("code", {
   plugins: [["transform-assets-import-to-string", {
-    "baseDir": "/assets",
-    "baseUri": "http://your.cdn.address"
+    "extensions": [".gif", ".jpeg", ".jpg", ".png", ".svg"],
+    "alias": [
+      { from: "/assets/images", to: "http://cdn.1.address"},
+      { from: "/assets/jpegonly", to: "http://cdn.2.address"},
+      { from: "/assets", to: "http://cdn.3.address"}
+    ]
   }]]
 });
 ```
 
-By default, it will transform the following extensions: `.gif, .jpeg, .jpg, .png, .svg` if `extensions` option is not defined. To configure a custom list, just add the `extensions` array as an option.
+## Options
 
-__Note:__ leading `.` (dot) is required.
+| option     | defaults                      | description                                               |
+| ---------- | ----------------------------- | --------------------------------------------------------- |
+| extensions | .gif, .jpeg, .jpg, .png, .svg | define which extensions to apply to by default            |
+| to         |                               | fallback to address if it's not defined in an alias entry |
+| alias      | []                            | list of transforms                                        |
 
-```json
-{
-  "plugins": [
-    ["transform-assets-import-to-string", {
-      "extensions": [".jpg", ".png"]
-    }]
-  ]
-}
-```
+__Note:__ leading `.` (dot) is required for extensions.
+
 
 ## License
 

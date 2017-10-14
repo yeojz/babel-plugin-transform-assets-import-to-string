@@ -50,7 +50,9 @@
     "eslint": "^4.1.0",
     "mocha": "^3.4.2",
     "nyc": "^11.0.2",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "rollup": "^0.50.0",
+    "rollup-plugin-node-resolve": "^3.0.0"
   },
   "dependencies": {}
 }
