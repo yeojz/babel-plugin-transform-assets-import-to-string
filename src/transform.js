@@ -19,7 +19,7 @@ function getFile(absPath, baseDir, uri) {
     return (uri) ? '/' + file : file;
   }
 
-  return path.join(baseDir, file)
+  return path.join(baseDir, path.basename(file))
     .replace(/\\/g, '/')
     .replace(/\/\/g/, '/');
 }
