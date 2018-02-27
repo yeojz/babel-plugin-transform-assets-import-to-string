@@ -17,6 +17,14 @@ describe('index', function () {
     expect(result).to.equal('const test = \'http://cdn.address/assets/path/to/icon.svg\';');
   });
 
+  it('should let you flatten the file path', function () {
+    const config = Object.assign({}, baseConfig, {
+      flatten: true
+    });
+    const result = transformCode(getFixtures('import-image.js'), config).code;
+    expect(result).to.equal('const test = \'http://cdn.address/assets/icon.svg\';');
+  });
+
   it('should replace import statements with uri and hash of content', function () {
     const config = Object.assign({}, baseConfig, {
       hash: 1,
