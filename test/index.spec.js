@@ -14,6 +14,14 @@ describe('index', function () {
 
   it('should replace import statements with uri', function () {
     const result = transformCode(getFixtures('import-image.js'), baseConfig).code;
+    expect(result).to.equal('const test = \'http://cdn.address/assets/path/to/icon.svg\';');
+  });
+
+  it('should let you flatten the file path', function () {
+    const config = Object.assign({}, baseConfig, {
+      flatten: true
+    });
+    const result = transformCode(getFixtures('import-image.js'), config).code;
     expect(result).to.equal('const test = \'http://cdn.address/assets/icon.svg\';');
   });
 
@@ -40,7 +48,7 @@ describe('index', function () {
 
   it('should replace require statements with uri', function () {
     const result = transformCode(getFixtures('require-image.js'), baseConfig).code;
-    expect(result).to.equal('const test = \'http://cdn.address/assets/icon.svg\';');
+    expect(result).to.equal('const test = \'http://cdn.address/assets/path/to/icon.svg\';');
   });
 
   it('should do nothing when imports have no extensions', function () {

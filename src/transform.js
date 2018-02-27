@@ -10,7 +10,7 @@ function getHash(str) {
     .slice(0, 8);
 }
 
-function getFile(absPath, baseDir, uri) {
+function getFile(absPath, baseDir, uri, flatten) {
   const file = absPath
     .split(baseDir || path.sep)
     .pop();
@@ -19,7 +19,9 @@ function getFile(absPath, baseDir, uri) {
     return (uri) ? '/' + file : file;
   }
 
-  return path.join(baseDir, path.basename(file))
+  const fileName = flatten ? path.basename(file) : file;
+
+  return path.join(baseDir, fileName)
     .replace(/\\/g, '/')
     .replace(/\/\/g/, '/');
 }
@@ -35,7 +37,7 @@ const getVariableName = (p) => {
 }
 
 export default (p, t, opts, absPath, calleeName) => {
-  const file = getFile(absPath, opts.baseDir, opts.baseUri);
+  const file = getFile(absPath, opts.baseDir, opts.baseUri, opts.flatten);
   let hash = '';
 
   if (opts.hash === 1) {

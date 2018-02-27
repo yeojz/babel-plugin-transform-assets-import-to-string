@@ -2,6 +2,7 @@ import {dirname, extname, resolve} from'path';
 import transform from './transform';
 
 export const defaultOptions = {
+  flatten: false,
   extensions: [
     '.gif',
     '.jpeg',
