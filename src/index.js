@@ -1,50 +1,72 @@
-import {dirname, extname, resolve} from'path';
 import transform from './transform';
 
-export const defaultOptions = {
-  flatten: false,
-  extensions: [
-    '.gif',
-    '.jpeg',
-    '.jpg',
-    '.png',
-    '.svg'
-  ]
+const defaultOptions = {
+  baseUri: '',
+  extensions: ['.gif', '.jpeg', '.jpg', '.png', '.svg'],
+  flatten: false
+};
+
+function isRequireStatement(p) {
+  const callee = p.get('callee');
+  return callee.isIdentifier() && callee.equals('name', 'require');
 }
 
-const applyTransform = (p, t, state, value, calleeName) => {
-  const ext = extname(value);
-  const options = Object.assign({}, defaultOptions, state.opts);
+function isValidArgument(p) {
+  const arg = p.get('arguments')[0];
+  return arg && arg.isStringLiteral();
+}
 
-
-  if (options.extensions && options.extensions.indexOf(ext) >= 0) {
-    const dir = dirname(resolve(state.file.opts.filename));
-    const absPath = resolve(dir, value);
-    transform(p, t, options, absPath, calleeName);
+function initOptions(cache, state) {
+  if (cache) {
+    return cache;
   }
+
+  return Object.assign({}, defaultOptions, state.opts);
 }
 
-export function transformImportsInline({types: t}) {
+function transformAssets({ types: t }) {
   return {
+    pre() {
+      this.optionCache = null;
+    },
+    post() {
+      this.optionCache = null;
+    },
     visitor: {
       ImportDeclaration(p, state) {
-        applyTransform(p, t, state, p.node.source.value, 'import');
+        this.optionCache = initOptions(this.optionCache, state);
+
+        transform(
+          {
+            path: p,
+            types: t,
+            filename: state.file.opts.filename,
+            value: p.node.source.value,
+            callee: 'import'
+          },
+          this.optionCache
+        );
       },
       CallExpression(p, state) {
-        const callee = p.get('callee');
-        if (!callee.isIdentifier() || !callee.equals('name', 'require')) {
-          return;
-        }
+        if (isRequireStatement(p) && isValidArgument(p)) {
+          const arg = p.get('arguments')[0];
+          this.optionCache = initOptions(this.optionCache, state);
 
-        const arg = p.get('arguments')[0];
-        if (!arg || !arg.isStringLiteral()) {
-          return;
+          transform(
+            {
+              path: p,
+              types: t,
+              filename: state.file.opts.filename,
+              value: arg.node.value,
+              callee: 'require'
+            },
+            this.optionCache
+          );
         }
-
-        applyTransform(p, t, state, arg.node.value, 'require');
       }
     }
-  }
+  };
 }
 
-export default transformImportsInline;
+export { defaultOptions };
+export default transformAssets;
