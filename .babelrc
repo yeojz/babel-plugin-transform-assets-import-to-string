@@ -1,11 +1,9 @@
 {
   "presets": [
-    "es2015"
-  ],
-  "plugins": [
-  ],
-  "env": {
-     "test": {
-     }
-   }
+    ["env", {
+      "targets": {
+        "node": "6"
+      }
+    }]
+  ]
 }
