@@ -7,15 +7,19 @@
 
 ## Table of Contents
 
-* [About](#about)
-* [Installation](#installation)
-* [Usage](#usage)
-  * [via babelrc](#via-babelrc)
-  * [via Node API](#via-node-api)
+- [Table of Contents](#table-of-contents)
+- [About](#about)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [via .babelrc](#via-babelrc)
+  - [via Node API](#via-node-api)
+- [License](#license)
 
 ## About
 
-This [babel](https://babeljs.io/) plugin allows you to transform asset files into a string uri, allowing you to point your assets to CDN or other hosts, without needing to run your code through module bundlers.
+This [babel](https://babeljs.io/) plugin allows you to transform asset files into a
+string uri, allowing you to point your assets to CDN or other hosts, without needing
+to run your code through module bundlers.
 
 This helps when doing _isomorphic_ / server-rendered applications.
 
@@ -41,8 +45,8 @@ See the spec for more [examples](https://github.com/yeojz/babel-plugin-transform
 
 ## Installation
 
-```
-$> npm install babel-plugin-transform-assets-import-to-string --save
+```bash
+npm install babel-plugin-transform-assets-import-to-string --save
 ```
 
 ## Usage
@@ -79,7 +83,9 @@ require('babel-core').transform('code', {
 });
 ```
 
-By default, it will transform the following extensions: `.gif, .jpeg, .jpg, .png, .svg` if `extensions` option is not defined. To configure a custom list, just add the `extensions` array as an option.
+By default, it will transform the following extensions: `.gif, .jpeg, .jpg, .png, .svg`
+if `extensions` option is not defined. To configure a custom list, just add
+the `extensions` array as an option.
 
 **Note:** leading `.` (dot) is required.
 

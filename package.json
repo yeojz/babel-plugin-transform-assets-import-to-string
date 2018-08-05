@@ -4,14 +4,13 @@
   "description": "Babel plugin that transforms image assets import and requires to urls / cdn",
   "main": "lib/index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production babel src --out-dir lib",
-    "clean": "rimraf lib coverage .nyc_output",
-    "coverage": "cross-env NODE_ENV=test nyc report --reporter=lcov",
-    "coveralls": "cross-env NODE_ENV=test nyc report --reporter=text-lcov | coveralls",
-    "lint": "eslint --ext js src test/**/*.spec.*",
-    "test": "cross-env NODE_ENV=test npm run test:run",
-    "test:run": "nyc --reporter=text-summary mocha 'test/**/*.spec.js'",
-    "test:watch": "npm run test -- -- --watch"
+    "build": "NODE_ENV=production rollup -c rollup.config.js",
+    "clean": "rimraf lib coverage",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "lint:js": "eslint \"src/**/**?(.spec|).js\"",
+    "lint:format": "prettier --write \"{src,test}/**/**.js\"",
+    "test": "jest --coverage",
+    "test:watch": "jest --coverage --watch"
   },
   "repository": {
     "type": "git",
@@ -43,16 +42,33 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
-    "chai": "^4.0.0",
     "coveralls": "^3.0.2",
     "cross-env": "^5.2.0",
     "eslint": "^5.3.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.2",
-    "mocha": "^5.2.0",
-    "nyc": "^12.0.2",
+    "jest": "^23.4.2",
     "prettier": "^1.14.0",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "rollup": "^0.63.5"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "coveragePathIgnorePatterns": [
+      "test"
+    ],
+    "modulePaths": [
+      "<rootDir>/src/"
+    ],
+    "roots": [
+      "<rootDir>/src/"
+    ],
+    "resetMocks": true,
+    "setupFiles": [],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "testURL": "http://localhost"
+  }
 }

@@ -68,5 +68,4 @@ function transformAssets({ types: t }) {
   };
 }
 
-export { defaultOptions };
 export default transformAssets;
