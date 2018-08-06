@@ -52,7 +52,9 @@
     "rimraf": "^2.6.1",
     "rollup": "^0.63.5"
   },
-  "dependencies": {},
+  "dependencies": {
+    "nanomatch": "^1.2.13"
+  },
   "jest": {
     "coverageDirectory": "./coverage/",
     "coveragePathIgnorePatterns": [

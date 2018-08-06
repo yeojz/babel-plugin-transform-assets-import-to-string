@@ -115,7 +115,7 @@ jobs:
       - run:
           name: lint
           command: |
-            npm run lint
+            npm run lint:js
       - run:
           name: send coverage report
           command: npm run coveralls
