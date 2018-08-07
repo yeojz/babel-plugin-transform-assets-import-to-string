@@ -1,15 +1,16 @@
 import path from 'path';
-import nanomatch from 'nanomatch';
+import mm from 'micromatch';
 
-function getRelativePath(filename) {
-  return path.relative(process.cwd(), path.resolve(filename));
+const ROOT_DIR = process.env.PWD;
+
+function getRelativePath(scope) {
+  const dir = path.dirname(path.resolve(scope.filename));
+  const absPath = path.resolve(dir, scope.value);
+  return path.relative(ROOT_DIR, absPath);
 }
 
-function interpolate(to, result) {
-  return result.reduceRight((str, value, idx) => {
-    const pos = '\\$\\{' + (idx + 1) + '\\}';
-    return str.replace(new RegExp(pos, 'g'), value);
-  }, to);
+function interpolate(str, resultset) {
+  return str.replace(/\$(\d+)/g, (_, num) => resultset[num] || '');
 }
 
 function getVariableName(node) {
@@ -20,6 +21,11 @@ function getVariableName(node) {
 
 function replaceNode(scope, value) {
   const content = scope.types.StringLiteral(value);
+
+  if (scope.callee === 'require') {
+    scope.path.replaceWith(content);
+    return;
+  }
 
   const variableName = getVariableName(scope.path.node);
   if (variableName) {
@@ -41,17 +47,16 @@ function transform(scope, options) {
     return;
   }
 
-  const filepath = getRelativePath(scope.filename);
+  const filepath = getRelativePath(scope);
 
   options.rules.some(rule => {
-    const result = nanomatch.capture(rule.match, filepath);
-
-    if (result) {
-      const value = interpolate(rule.to, result);
-      replaceNode(scope, value);
-      return true;
+    const result = mm.capture(rule.pattern, filepath, options.matchOptions);
+    if (!result) {
+      return false;
     }
-    return false;
+    const value = interpolate(rule.to, result);
+    replaceNode(scope, options.baseUri + value);
+    return true;
   });
 }
 

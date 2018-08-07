@@ -1,1 +1,1 @@
-const test = require('../../some/assets/deep/folder/assets/path/to/icon.svg');
+const test = require('../../some/deep/folder/assets/path/to/icon.svg');

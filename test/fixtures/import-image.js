@@ -1,1 +1,1 @@
-import test from '../../some/assets/deep/folder/assets/path/to/icon.svg';
+import test from '../../some/deep/folder/assets/path/to/icon.svg';

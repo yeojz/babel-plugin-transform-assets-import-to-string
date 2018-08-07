@@ -2,9 +2,9 @@ import path from 'path';
 import { transformFileSync } from 'babel-core';
 
 const SOURCE = process.env.SOURCE_PATH || 'src';
-const plugin = path.join(__dirname, '..', SOURCE, 'index.js');
+const plugin = path.join(__dirname, '..', SOURCE, 'multi.js');
 
-console.log('[SOURCE FILE] ', SOURCE + '/index.js'); //eslint-disable-line
+console.log('[SOURCE FILE] ', SOURCE + '/multi.js'); //eslint-disable-line
 
 export function transformFile(file, config = {}) {
   const babelOptions = {

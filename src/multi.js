@@ -3,10 +3,11 @@ import multiTransform from './mutliTransform';
 const defaultOptions = {
   baseUri: '',
   extensions: ['.gif', '.jpeg', '.jpg', '.png', '.svg'],
+  matchOptions: {},
   rules: [
     {
-      pattern: '**/assets/**/*',
-      to: '/${3}'
+      pattern: '**/*',
+      to: '$1'
     }
   ]
 };
@@ -25,15 +26,6 @@ function isValidArgument(path) {
   return arg && arg.isStringLiteral();
 }
 
-function createScope(path, state, types) {
-  return {
-    path,
-    types,
-    filename: state.file.opts.filename,
-    value: path.node.source.value,
-  }
-}
-
 function transformAssets({ types }) {
   return {
     pre() {
@@ -42,13 +34,29 @@ function transformAssets({ types }) {
     },
     visitor: {
       ImportDeclaration(path, state) {
-        const scope = createScope(path, state, types);
+        const scope = {
+          path,
+          types,
+          filename: state.file.opts.filename,
+          value: path.node.source.value,
+          callee: 'import'
+        };
+
         multiTransform(scope, this.pluginOptions);
       },
-      // CallExpression(path, state) {
-      //   if (isRequireStatement(path) && isValidArgument(path)) {
+      CallExpression(path, state) {
+        if (isRequireStatement(path) && isValidArgument(path)) {
+          const arg = path.get('arguments')[0];
+          const scope = {
+            path,
+            types,
+            filename: state.file.opts.filename,
+            value: arg.node.value,
+            callee: 'require'
+          };
 
-      //   }
+          multiTransform(scope, this.pluginOptions);
+        }
       }
     },
     post() {
