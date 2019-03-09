@@ -7,11 +7,12 @@
     "build": "cross-env NODE_ENV=production babel src --out-dir lib",
     "clean": "rimraf lib coverage .nyc_output",
     "coverage": "cross-env NODE_ENV=test nyc report --reporter=lcov",
-    "coveralls": "cross-env NODE_ENV=test nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint --ext js src test/**/*.spec.*",
     "test": "cross-env NODE_ENV=test npm run test:run",
     "test:run": "nyc --reporter=text-summary mocha 'test/**/*.spec.js'",
-    "test:watch": "npm run test -- -- --watch"
+    "test:watch": "npm run test -- -- --watch",
+    "update:release-notes": "npx conventional-github-releaser -p angular",
+    "upload:coverage": "cross-env NODE_ENV=test nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
