@@ -30,3 +30,6 @@ coverage
 
 .npm
 .node_repl_history
+
+# Worktrees
+.worktrees
