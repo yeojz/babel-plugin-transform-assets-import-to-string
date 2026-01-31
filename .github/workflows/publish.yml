@@ -24,7 +24,7 @@ jobs:
         run: |
           COMMIT_MSG="${{ github.event.head_commit.message }}"
           # Extract version from commit message and validate semver format
-          if [[ "$COMMIT_MSG" =~ ^chore:\ release\ v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+          if [[ "$COMMIT_MSG" =~ ^chore:\ release\ v([0-9]+\.[0-9]+\.[0-9]+) ]]; then
             echo "Valid release commit: ${BASH_REMATCH[1]}"
           else
             echo "Commit message does not match expected pattern: chore: release vX.Y.Z"
