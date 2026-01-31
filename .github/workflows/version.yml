@@ -51,7 +51,7 @@ jobs:
           BRANCH="release/v${{ steps.bump.outputs.version }}"
           git checkout -b "$BRANCH"
           git add package.json package-lock.json
-          git commit -m "chore: bump version to v${{ steps.bump.outputs.version }}"
+          git commit -m "chore: release v${{ steps.bump.outputs.version }}"
           git push origin "$BRANCH"
           gh pr create \
             --base main \
