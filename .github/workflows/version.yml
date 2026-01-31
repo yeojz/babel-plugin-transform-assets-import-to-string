@@ -63,6 +63,4 @@ jobs:
 
           ---
           *This PR was automatically created by the version workflow.*" \
-            --label "release" \
-            --label "automated" \
             --label "ci-release"
