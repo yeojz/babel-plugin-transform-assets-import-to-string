@@ -57,6 +57,9 @@
   "peerDependencies": {
     "@babel/core": "^7.20.0"
   },
+  "overrides": {
+    "esbuild@<=0.24.2": "^0.25.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/babel__core": "^7.20.0",
