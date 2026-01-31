@@ -54,7 +54,7 @@ jobs:
         id: check
         run: |
           VERSION=${{ steps.version.outputs.version }}
-          if npm view filter-chunk-webpack-plugin@$VERSION version 2>/dev/null; then
+          if npm view babel-plugin-transform-assets-import-to-string@$VERSION version 2>/dev/null; then
             echo "exists=true" >> $GITHUB_OUTPUT
             echo "Version $VERSION already exists on npm"
           else
@@ -88,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     permissions:
-      contents: write # Create GitHub Release
+      contents: write
       id-token: write
 
     steps:
@@ -123,5 +123,5 @@ jobs:
           echo "## Published to npm 🎉" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **Version:** ${{ needs.publish-dry-run.outputs.version }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **npm:** https://www.npmjs.com/package/filter-chunk-webpack-plugin/v/${{ needs.publish-dry-run.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **npm:** https://www.npmjs.com/package/babel-plugin-transform-assets-import-to-string/v/${{ needs.publish-dry-run.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           echo "- **GitHub Release:** https://github.com/${{ github.repository }}/releases/tag/v${{ needs.publish-dry-run.outputs.version }}" >> $GITHUB_STEP_SUMMARY
