@@ -52,7 +52,7 @@ export default function plugin(babel: {
     visitor: {
       ImportDeclaration(
         nodePath: NodePath<ImportDeclaration>,
-        state: PluginState
+        state: PluginState,
       ) {
         const opts: PluginOptions = {
           baseUri: '',
@@ -73,7 +73,7 @@ export default function plugin(babel: {
           opts,
           t,
           buildCache!,
-          projectRoot
+          projectRoot,
         );
       },
       CallExpression(nodePath: NodePath<CallExpression>, state: PluginState) {
@@ -102,7 +102,7 @@ export default function plugin(babel: {
             opts,
             t,
             buildCache!,
-            projectRoot
+            projectRoot,
           );
         }
       },

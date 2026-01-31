@@ -40,7 +40,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.ImportDeclaration as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       const mockPath = {
@@ -77,7 +77,7 @@ describe('plugin', () => {
           pathMap: expect.any(Map),
           outputMap: expect.any(Map),
         }),
-        '/project'
+        '/project',
       );
     });
 
@@ -85,7 +85,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.ImportDeclaration as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       const mockPath = {
@@ -108,7 +108,7 @@ describe('plugin', () => {
         expect.anything(),
         expect.anything(),
         expect.anything(),
-        process.cwd()
+        process.cwd(),
       );
     });
   });
@@ -118,7 +118,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.CallExpression as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       const mockPath = {
@@ -161,7 +161,7 @@ describe('plugin', () => {
         }),
         mockTypes,
         expect.anything(),
-        '/project'
+        '/project',
       );
     });
 
@@ -169,7 +169,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.CallExpression as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       const mockPath = {
@@ -207,7 +207,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.CallExpression as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       const mockPath = {
@@ -245,7 +245,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.CallExpression as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       const mockPath = {
@@ -278,7 +278,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.CallExpression as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       const mockPath = {
@@ -316,7 +316,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.CallExpression as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       const mockPath = {
@@ -351,7 +351,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.CallExpression as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       let callCount = 0;
@@ -395,7 +395,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.CallExpression as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       const mockPath = {
@@ -431,7 +431,7 @@ describe('plugin', () => {
         expect.anything(),
         expect.anything(),
         expect.anything(),
-        process.cwd()
+        process.cwd(),
       );
     });
   });
@@ -441,7 +441,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.ImportDeclaration as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       const mockPath = {
@@ -465,7 +465,7 @@ describe('plugin', () => {
           pathMap: expect.any(Map),
           outputMap: expect.any(Map),
         }),
-        expect.anything()
+        expect.anything(),
       );
     });
 
@@ -473,7 +473,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.ImportDeclaration as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       const mockPath = {
@@ -495,12 +495,14 @@ describe('plugin', () => {
       pluginInstance.pre?.call(mockState1 as never);
       visitor(mockPath, mockState1);
 
-      const firstCacheArg = (transform as ReturnType<typeof vi.fn>).mock.calls[0][3];
+      const firstCacheArg = (transform as ReturnType<typeof vi.fn>).mock
+        .calls[0][3];
 
       pluginInstance.pre?.call(mockState2 as never);
       visitor(mockPath, mockState2);
 
-      const secondCacheArg = (transform as ReturnType<typeof vi.fn>).mock.calls[1][3];
+      const secondCacheArg = (transform as ReturnType<typeof vi.fn>).mock
+        .calls[1][3];
 
       expect(firstCacheArg).toBe(secondCacheArg);
     });
@@ -509,7 +511,7 @@ describe('plugin', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
       const visitor = pluginInstance.visitor!.ImportDeclaration as (
         path: unknown,
-        state: unknown
+        state: unknown,
       ) => void;
 
       const mockPath = {
@@ -525,21 +527,27 @@ describe('plugin', () => {
       pluginInstance.pre?.call(mockState as never);
       visitor(mockPath, mockState);
 
-      const firstCacheArg = (transform as ReturnType<typeof vi.fn>).mock.calls[0][3];
+      const firstCacheArg = (transform as ReturnType<typeof vi.fn>).mock
+        .calls[0][3];
 
       resetBuildCache();
 
       pluginInstance.pre?.call(mockState as never);
       visitor(mockPath, mockState);
 
-      const secondCacheArg = (transform as ReturnType<typeof vi.fn>).mock.calls[1][3];
+      const secondCacheArg = (transform as ReturnType<typeof vi.fn>).mock
+        .calls[1][3];
 
       expect(firstCacheArg).not.toBe(secondCacheArg);
     });
 
     it('post hook exists and can be called', () => {
       const pluginInstance = plugin({ types: mockTypes as never });
-      const mockState = { opts: {}, filename: '/project/src/file.js', cwd: '/project' };
+      const mockState = {
+        opts: {},
+        filename: '/project/src/file.js',
+        cwd: '/project',
+      };
 
       // Should not throw
       expect(() => pluginInstance.post?.call(mockState as never)).not.toThrow();

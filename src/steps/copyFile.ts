@@ -22,10 +22,10 @@ export function copyFile(options: CopyFileOptions): void {
   if (existingSource && existingSource !== absPath) {
     throw new Error(
       `Filename collision detected (hashLength is 0)\n` +
-      `  - ${existingSource}\n` +
-      `  - ${absPath}\n` +
-      `  Both would output to: ${path.join(outputDir, outputPath)}\n` +
-      `  Consider enabling hashLength or renaming one of the files.`
+        `  - ${existingSource}\n` +
+        `  - ${absPath}\n` +
+        `  Both would output to: ${path.join(outputDir, outputPath)}\n` +
+        `  Consider enabling hashLength or renaming one of the files.`,
     );
   }
 

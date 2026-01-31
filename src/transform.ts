@@ -11,7 +11,7 @@ export function transform(
   options: PluginOptions,
   t: typeof types,
   cache: CopyCache,
-  projectRoot: string
+  projectRoot: string,
 ): void {
   const ext = path.extname(scope.value);
 

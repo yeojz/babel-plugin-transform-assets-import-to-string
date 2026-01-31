@@ -28,10 +28,14 @@ describe('replaceNode', () => {
         callee: 'require',
       };
 
-      replaceNode(scope, 'https://cdn.example.com/image.abc123.png', mockTypes as never);
+      replaceNode(
+        scope,
+        'https://cdn.example.com/image.abc123.png',
+        mockTypes as never,
+      );
 
       expect(mockTypes.stringLiteral).toHaveBeenCalledWith(
-        'https://cdn.example.com/image.abc123.png'
+        'https://cdn.example.com/image.abc123.png',
       );
       expect(replaceWith).toHaveBeenCalledWith({
         type: 'StringLiteral',
@@ -60,10 +64,17 @@ describe('replaceNode', () => {
         callee: 'import',
       };
 
-      replaceNode(scope, 'https://cdn.example.com/image.abc123.png', mockTypes as never);
+      replaceNode(
+        scope,
+        'https://cdn.example.com/image.abc123.png',
+        mockTypes as never,
+      );
 
       expect(mockTypes.identifier).toHaveBeenCalledWith('myImage');
-      expect(mockTypes.variableDeclaration).toHaveBeenCalledWith('const', expect.any(Array));
+      expect(mockTypes.variableDeclaration).toHaveBeenCalledWith(
+        'const',
+        expect.any(Array),
+      );
       expect(replaceWith).toHaveBeenCalled();
     });
 
@@ -81,7 +92,11 @@ describe('replaceNode', () => {
         callee: 'import',
       };
 
-      replaceNode(scope, 'https://cdn.example.com/image.abc123.png', mockTypes as never);
+      replaceNode(
+        scope,
+        'https://cdn.example.com/image.abc123.png',
+        mockTypes as never,
+      );
 
       expect(replaceWith).not.toHaveBeenCalled();
     });
@@ -105,7 +120,11 @@ describe('replaceNode', () => {
         callee: 'import',
       };
 
-      replaceNode(scope, 'https://cdn.example.com/image.abc123.png', mockTypes as never);
+      replaceNode(
+        scope,
+        'https://cdn.example.com/image.abc123.png',
+        mockTypes as never,
+      );
 
       expect(replaceWith).not.toHaveBeenCalled();
     });

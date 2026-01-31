@@ -13,7 +13,7 @@ const { resetBuildCache } = require(pluginPath) as {
 
 export function transformCode(
   file: string,
-  config: PluginOptions = {}
+  config: PluginOptions = {},
 ): { code: string | null | undefined } {
   // Reset cache between test runs
   resetBuildCache();
