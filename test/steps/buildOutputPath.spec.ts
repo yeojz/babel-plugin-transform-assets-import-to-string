@@ -77,6 +77,16 @@ describe('buildOutputPath', () => {
       expect(result).toBe('logo.abc123.svg');
     });
 
+    it('returns just filename when file is directly in preservePaths directory', () => {
+      const result = buildOutputPath({
+        absPath: '/project/src/logo.svg',
+        hash: 'abc123',
+        preservePaths: 'src',
+        projectRoot: '/project',
+      });
+      expect(result).toBe('logo.abc123.svg');
+    });
+
     it('normalizes Windows-style paths to forward slashes', () => {
       const result = buildOutputPath({
         absPath: '/project/src/components/logo.svg',
