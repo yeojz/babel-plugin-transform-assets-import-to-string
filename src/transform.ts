@@ -1,5 +1,5 @@
 import path from 'node:path';
-import type { types as t } from '@babel/core';
+import type { types } from '@babel/core';
 import { computeFileHash } from './steps/fileHash.js';
 import { buildOutputPath } from './steps/buildOutputPath.js';
 import { copyFile } from './steps/copyFile.js';
@@ -9,7 +9,7 @@ import type { PluginOptions, TransformScope, CopyCache } from './types.js';
 export function transform(
   scope: TransformScope,
   options: PluginOptions,
-  types: typeof t,
+  t: typeof types,
   cache: CopyCache,
   projectRoot: string
 ): void {
@@ -54,5 +54,5 @@ export function transform(
   const separator = baseUri && !baseUri.endsWith('/') ? '/' : '';
   const uri = `${baseUri}${separator}${outputPath}`;
 
-  replaceNode(scope, uri, types);
+  replaceNode(scope, uri, t);
 }

@@ -1,7 +1,7 @@
-import type { types as t } from '@babel/core';
+import type { types } from '@babel/core';
 import type { TransformScope } from '../types.js';
 
-function getVariableName(node: t.ImportDeclaration): string | undefined {
+function getVariableName(node: ReturnType<typeof types.importDeclaration>): string | undefined {
   if (node.specifiers?.[0]?.type === 'ImportDefaultSpecifier') {
     return node.specifiers[0].local.name;
   }
@@ -11,22 +11,22 @@ function getVariableName(node: t.ImportDeclaration): string | undefined {
 export function replaceNode(
   scope: TransformScope,
   uri: string,
-  types: typeof t
+  t: typeof types
 ): void {
-  const content = types.stringLiteral(uri);
+  const content = t.stringLiteral(uri);
 
   if (scope.callee === 'require') {
     scope.path.replaceWith(content);
     return;
   }
 
-  const importPath = scope.path as import('@babel/core').NodePath<t.ImportDeclaration>;
+  const importPath = scope.path as import('@babel/core').NodePath<ReturnType<typeof types.importDeclaration>>;
   const variableName = getVariableName(importPath.node);
 
   if (variableName) {
     scope.path.replaceWith(
-      types.variableDeclaration('const', [
-        types.variableDeclarator(types.identifier(variableName), content),
+      t.variableDeclaration('const', [
+        t.variableDeclarator(t.identifier(variableName), content),
       ])
     );
   }

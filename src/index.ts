@@ -1,4 +1,4 @@
-import type { PluginObj, NodePath } from '@babel/core';
+import type { PluginObj, NodePath, types } from '@babel/core';
 import type { ImportDeclaration, CallExpression } from '@babel/types';
 import { transform } from './transform.js';
 import type { PluginOptions, CopyCache } from './types.js';
@@ -29,11 +29,10 @@ interface PluginState {
 // Module-level cache shared across all files in a build
 let buildCache: CopyCache | null = null;
 
-export default function plugin({
-  types: t,
-}: {
-  types: typeof import('@babel/types');
+export default function plugin(babel: {
+  types: typeof types;
 }): PluginObj<PluginState> {
+  const t = babel.types;
   return {
     name: 'transform-assets-import-to-string',
     pre() {
