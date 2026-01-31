@@ -7,6 +7,9 @@ on:
     paths:
       - "package.json"
 
+permissions:
+  contents: read
+
 jobs:
   publish-dry-run:
     if: "${{ github.event_name == 'workflow_dispatch' || startsWith(github.event.head_commit.message, 'chore: release v') }}"
@@ -84,6 +87,9 @@ jobs:
     if: needs.publish-dry-run.outputs.should_publish == 'true'
     runs-on: ubuntu-latest
     environment: production
+    permissions:
+      contents: write # Create GitHub Release
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
@@ -104,6 +110,7 @@ jobs:
       - name: Publish to npm
         run: npm publish --access public
         env:
+          NPM_CONFIG_PROVENANCE: true
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
