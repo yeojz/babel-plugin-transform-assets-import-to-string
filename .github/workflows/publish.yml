@@ -2,21 +2,31 @@ name: Publish to npm
 
 on:
   workflow_dispatch:
-  pull_request:
-    types: [closed]
+  push:
     branches: [main]
+    paths:
+      - "package.json"
 
 jobs:
   publish-dry-run:
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.pull_request.merged == true &&
-       contains(github.event.pull_request.labels.*.name, 'ci-release'))
+    if: "${{ github.event_name == 'workflow_dispatch' || startsWith(github.event.head_commit.message, 'chore: release v') }}"
     runs-on: ubuntu-latest
     environment: general
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Validate release commit
+        if: github.event_name == 'push'
+        run: |
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          # Extract version from commit message and validate semver format
+          if [[ "$COMMIT_MSG" =~ ^chore:\ release\ v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            echo "Valid release commit: ${BASH_REMATCH[1]}"
+          else
+            echo "Commit message does not match expected pattern: chore: release vX.Y.Z"
+            exit 1
+          fi
 
       - name: Use Node.js 22
         uses: actions/setup-node@v4
@@ -41,7 +51,7 @@ jobs:
         id: check
         run: |
           VERSION=${{ steps.version.outputs.version }}
-          if npm view babel-plugin-transform-assets-import-to-string@$VERSION version 2>/dev/null; then
+          if npm view filter-chunk-webpack-plugin@$VERSION version 2>/dev/null; then
             echo "exists=true" >> $GITHUB_OUTPUT
             echo "Version $VERSION already exists on npm"
           else
@@ -106,5 +116,5 @@ jobs:
           echo "## Published to npm 🎉" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **Version:** ${{ needs.publish-dry-run.outputs.version }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **npm:** https://www.npmjs.com/package/babel-plugin-transform-assets-import-to-string/v/${{ needs.publish-dry-run.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **npm:** https://www.npmjs.com/package/filter-chunk-webpack-plugin/v/${{ needs.publish-dry-run.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           echo "- **GitHub Release:** https://github.com/${{ github.repository }}/releases/tag/v${{ needs.publish-dry-run.outputs.version }}" >> $GITHUB_STEP_SUMMARY
