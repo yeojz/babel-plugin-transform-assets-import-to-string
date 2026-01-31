@@ -1,35 +1,32 @@
+# OS
 .DS_Store
+
+# IDE
 .idea
 .vscode
 
+# Secrets
 *.key
 *.pem
-*.pyc
 
-pids
-*.pid
-*.seed
-
+# Logs
 logs
 *.log
-dump.rdb
 npm-debug.log*
 
-build/Release
+# Dependencies
 node_modules
-node_modules-*
-jspm_packages
 
+# Build output
+dist
 lib
-lib-cov
+
+# Test coverage
 coverage
 .nyc_output
 
-.grunt
-.lock-wscript
-
-.npm
-.node_repl_history
+# Turbo
+.turbo
 
 # Worktrees
 .worktrees

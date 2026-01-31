@@ -2,17 +2,33 @@
   "name": "babel-plugin-transform-assets-import-to-string",
   "version": "1.2.0",
   "description": "Babel plugin that transforms image assets import and requires to urls / cdn",
-  "main": "lib/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "build": "cross-env NODE_ENV=production babel src --out-dir lib",
-    "clean": "rimraf lib coverage .nyc_output",
-    "coverage": "cross-env NODE_ENV=test nyc report --reporter=lcov",
-    "lint": "eslint --ext js src test/**/*.spec.*",
-    "test": "cross-env NODE_ENV=test npm run test:run",
-    "test:run": "nyc --reporter=text-summary mocha 'test/**/*.spec.js'",
-    "test:watch": "npm run test -- -- --watch",
-    "update:release-notes": "npx conventional-github-releaser -p angular",
-    "upload:coverage": "cross-env NODE_ENV=test nyc report --reporter=text-lcov | coveralls"
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src test",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist .turbo",
+    "check": "turbo lint typecheck test"
   },
   "repository": {
     "type": "git",
@@ -20,19 +36,17 @@
   },
   "keywords": [
     "babel",
+    "babel-plugin",
     "import",
     "assets",
     "cdn",
     "images",
     "isomorphic",
     "server-side-rendering",
-    "babel-plugin",
-    "plugin",
-    "require",
+    "ssr",
     "transform",
     "string",
-    "universal",
-    "webpack"
+    "universal"
   ],
   "author": "Gerald Yeo <contact@fusedthought.com>",
   "license": "MIT",
@@ -40,20 +54,19 @@
     "url": "https://github.com/yeojz/babel-plugin-transform-assets-import-to-string/issues"
   },
   "homepage": "https://github.com/yeojz/babel-plugin-transform-assets-import-to-string#readme",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
-    "chai": "^4.0.0",
-    "coveralls": "^3.0.2",
-    "cross-env": "^5.2.0",
-    "eslint": "^5.3.0",
-    "eslint-config-prettier": "^3.0.0",
-    "eslint-plugin-prettier": "^2.6.2",
-    "mocha": "^6.0.0",
-    "nyc": "^12.0.2",
-    "prettier": "^1.14.0",
-    "rimraf": "^2.6.1"
+  "peerDependencies": {
+    "@babel/core": "^7.20.0"
   },
-  "dependencies": {}
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/babel__core": "^7.20.0",
+    "@types/node": "^20.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "tsup": "^8.0.0",
+    "turbo": "^2.0.0",
+    "typescript": "~5.5.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^2.0.0"
+  }
 }
