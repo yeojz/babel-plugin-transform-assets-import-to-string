@@ -1,1 +1,1 @@
-import test from '../icon.svg'
+import test from '../icon.svg';

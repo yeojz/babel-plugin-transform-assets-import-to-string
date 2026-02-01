@@ -105,7 +105,7 @@ describe('transform', () => {
     expect(replaceNode).toHaveBeenCalledWith(
       scope,
       'https://cdn.example.com/logo.abc12345.svg',
-      mockTypes
+      mockTypes,
     );
   });
 
@@ -167,7 +167,7 @@ describe('transform', () => {
     expect(replaceNode).toHaveBeenCalledWith(
       scope,
       'https://cdn.example.com/assets/logo.abc12345.svg',
-      mockTypes
+      mockTypes,
     );
   });
 
@@ -189,7 +189,7 @@ describe('transform', () => {
     expect(replaceNode).toHaveBeenCalledWith(
       scope,
       'https://cdn.example.com/assets/logo.abc12345.svg',
-      mockTypes
+      mockTypes,
     );
   });
 
@@ -209,7 +209,7 @@ describe('transform', () => {
 
     expect(computeFileHash).toHaveBeenCalledWith(
       path.resolve('/project/src', './logo.svg'),
-      8
+      8,
     );
   });
 
@@ -230,7 +230,7 @@ describe('transform', () => {
 
     expect(computeFileHash).toHaveBeenCalledWith(
       path.resolve('/project/src', './logo.svg'),
-      12
+      12,
     );
   });
 });

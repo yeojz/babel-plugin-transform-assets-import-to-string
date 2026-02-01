@@ -22,7 +22,7 @@ describe('babel-plugin-transform-assets-import-to-string', () => {
       });
       // Hash is content-based, so we check the pattern
       expect(result.code).toMatch(
-        /const logo = "https:\/\/cdn\.example\.com\/assets\/logo\.[a-f0-9]{8}\.svg";/
+        /const logo = "https:\/\/cdn\.example\.com\/assets\/logo\.[a-f0-9]{8}\.svg";/,
       );
     });
 
@@ -37,7 +37,7 @@ describe('babel-plugin-transform-assets-import-to-string', () => {
         hashLength: 0,
       });
       expect(result.code).toBe(
-        'const logo = "https://cdn.example.com/assets/logo.svg";'
+        'const logo = "https://cdn.example.com/assets/logo.svg";',
       );
     });
 
@@ -47,7 +47,7 @@ describe('babel-plugin-transform-assets-import-to-string', () => {
         preservePaths: 'fixtures',
       });
       expect(result.code).toMatch(
-        /const logo = "https:\/\/cdn\.example\.com\/assets\/components\/header\/logo\.[a-f0-9]{8}\.svg";/
+        /const logo = "https:\/\/cdn\.example\.com\/assets\/components\/header\/logo\.[a-f0-9]{8}\.svg";/,
       );
     });
 
@@ -56,7 +56,7 @@ describe('babel-plugin-transform-assets-import-to-string', () => {
         baseUri: 'https://cdn.example.com/assets',
       });
       expect(result.code).toMatch(
-        /const test = "https:\/\/cdn\.example\.com\/assets\/icon\.[a-f0-9]{8}\.svg";/
+        /const test = "https:\/\/cdn\.example\.com\/assets\/icon\.[a-f0-9]{8}\.svg";/,
       );
     });
 

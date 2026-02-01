@@ -47,7 +47,12 @@ describe('copyFile', () => {
 
     copyFile(options);
 
-    const destPath = path.join(tempDir, 'components', 'header', 'icon.abc123.svg');
+    const destPath = path.join(
+      tempDir,
+      'components',
+      'header',
+      'icon.abc123.svg',
+    );
     expect(fs.existsSync(destPath)).toBe(true);
   });
 
@@ -88,7 +93,12 @@ describe('copyFile', () => {
   describe('collision detection (hashLength: 0)', () => {
     it('throws error when different files have same output path', () => {
       const sourcePath1 = path.resolve(import.meta.dirname, '..', 'icon.svg');
-      const sourcePath2 = path.resolve(import.meta.dirname, '..', 'fixtures', 'import-image.js');
+      const sourcePath2 = path.resolve(
+        import.meta.dirname,
+        '..',
+        'fixtures',
+        'import-image.js',
+      );
 
       // First file
       copyFile({
